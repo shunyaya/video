@@ -1,6 +1,9 @@
 # Add by Ball45
-# test will be manage into src
+# test/ will be manage into src/
 test/
+.vscode/
+src/.vscode/
+.venv/
 
 # Add by Chin
 media/
