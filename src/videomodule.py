@@ -35,11 +35,12 @@ ins=[]
 sound = AudioSegment.from_file(stream_pos+'.wav', format="wav") 
 # returns generator of AudioRegion objects
 audio_regions = auditok.split(
-    stream_name + 'wav',
-    min_dur=0.2,         # minimum duration of a valid audio event in seconds
-    max_dur=100,         # maximum duration of an event
-    max_silence=2,       # maximum duration of tolerated continuous silence within an event
-    energy_threshold=50  # threshold of detection
+    stream_pos+'.wav',
+    min_dur=2,         # minimum duration of a valid audio event in seconds
+    max_dur=60 * 60,         # maximum duration of an event
+    max_silence=1,       # maximum duration of tolerated continuous silence within an event
+    strict_min_dur=True,
+    energy_threshold=73  # threshold of detection
 )
 
 for i, r in enumerate(audio_regions):
@@ -47,6 +48,7 @@ for i, r in enumerate(audio_regions):
     record_end[i] = r.meta.end
     speech[i] = record_end[i] - record_start[i]
     print("Speech  {i}: {r.meta.start:.3f}s -- {r.meta.end:.3f}s".format(i=i,r=r), "Duration : ", speech[i])
+    r.play(progress_bar=True)
     num = num+1
 
 for j in range(num-1):
