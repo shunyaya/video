@@ -1,6 +1,6 @@
 FONT_URL='/home/ball45/Projects/video/resources/wt024.ttf'
 from moviepy import editor
-import os.path as op
+import os
 
 # handling with video source
 source_file = input('Enter your video stream and file name:')
@@ -10,6 +10,9 @@ source_path, source_name, source_format = source_file[:slash_pos+1], source_file
 source_clip = editor.VideoFileClip(source_file)
 
 # handling with subtitle file
+if not os.path.exists(source_path + source_name + '.srt'):
+    os.system("autosub -S zh-CN -D zh-CN " + source_file)
+
 subtitle_file = open(source_path + source_name + '.srt')
 subtitle_line = subtitle_file.readlines()
 subtitle_file.close()
@@ -51,8 +54,6 @@ while i < len(subtitle_list) - 1:
     if subtitle_list[i].time_end < subtitle_list[i+1].time_start:
         time_start = subtitle_list[i].time_end
         time_end = subtitle_list[i+1].time_start
-        # time_start = subtitle_list[i].get_next_timeslice()
-        # time_end = subtitle_list[i+1].get_prev_timeslice()
         subtitle_list.insert(i+1, Subtitle(time_start, time_end))
         i += 1
 
@@ -60,6 +61,7 @@ while i < len(subtitle_list) - 1:
 
 def export_srt_file(subtitle_list, filename=source_name+'_new', filepath=source_path):
     f = open(filepath+filename+'.srt', 'w')
+
     for i in range(len(subtitle_list)):
         f.write(str(i) + '\n')
         f.write(subtitle_list[i].time_start + ' --> ' + subtitle_list[i].time_end + '\n')
