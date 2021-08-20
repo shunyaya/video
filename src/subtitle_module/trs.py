@@ -1,4 +1,4 @@
-FONT_URL='src/wt024.ttf'
+FONT_URL='/home/ball45/Projects/video/resources/wt024.ttf'
 from moviepy import editor
 import os.path as op
 
@@ -58,7 +58,7 @@ while i < len(subtitle_list) - 1:
 
     i += 1
 
-def export_srt_file(subtitle_list, filename=source_name+'_new_2', filepath=source_path):
+def export_srt_file(subtitle_list, filename=source_name+'_new', filepath=source_path):
     f = open(filepath+filename+'.srt', 'w')
     for i in range(len(subtitle_list)):
         f.write(str(i) + '\n')
@@ -81,4 +81,4 @@ for subtitle in subtitle_list:
     annotated_clips.append(annotate(source_clip.subclip(subtitle.time_start, subtitle.time_end), subtitle.string))
 
 final_clip = editor.concatenate_videoclips(annotated_clips)
-final_clip.write_videofile("movie_output.mp4")
+final_clip.write_videofile(source_path+source_name+"_with_subtitle.mp4")
