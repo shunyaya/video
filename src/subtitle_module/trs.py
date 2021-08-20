@@ -1,4 +1,4 @@
-FONT_URL='/home/ball45/Downloads/TaipeiSansTCBeta-Light.ttf'
+FONT_URL='src/wt024.ttf'
 from moviepy import editor
 import os.path as op
 
@@ -57,7 +57,6 @@ while i < len(subtitle_list) - 1:
         i += 1
 
     i += 1
-
 
 def export_srt_file(subtitle_list, filename=source_name+'_new_2', filepath=source_path):
     f = open(filepath+filename+'.srt', 'w')
